@@ -1,0 +1,160 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 84% 4.9%;
+
+  --primary: 221.2 83.2% 53.3%;
+  --primary-foreground: 210 40% 98%;
+
+  --secondary: 210 40% 96.1%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+
+  --accent: 210 40% 96.1%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 221.2 83.2% 53.3%;
+
+  --radius: 0.75rem;
+}
+
+.dark {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+
+  --primary: 217.2 91.2% 59.8%;
+  --primary-foreground: 222.2 47.4% 11.2%;
+
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 224.3 76.3% 48%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased font-inter;
+  }
+}
+
+/* Custom Utilities */
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .glassmorphism {
+    @apply bg-white/40 backdrop-blur-md border border-white/20;
+  }
+
+  .input-class {
+    @apply flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200;
+  }
+
+  /* Layout */
+  .home {
+    @apply flex w-full flex-row max-xl:max-h-screen max-xl:overflow-y-scroll bg-[#F9FAFB];
+  }
+
+  .home-content {
+    @apply no-scrollbar flex w-full flex-1 flex-col gap-8 px-5 sm:px-8 py-7 lg:py-12 xl:max-h-screen xl:overflow-y-scroll;
+  }
+
+  .home-header {
+    @apply flex flex-col justify-between gap-8;
+  }
+
+  /* Components */
+  .total-balance {
+    @apply flex w-full items-center gap-4 rounded-2xl border bg-white p-6 shadow-sm hover:shadow-md transition-shadow duration-300 sm:gap-6;
+  }
+
+  .total-balance-amount {
+    @apply text-3xl lg:text-4xl font-bold tracking-tight text-slate-900;
+  }
+
+  .sidebar {
+    @apply sticky left-0 top-0 flex h-screen w-fit flex-col justify-between border-r bg-white pt-8 text-slate-900 max-md:hidden sm:p-4 xl:p-6 2xl:w-[280px] shadow-sm;
+  }
+
+  .sidebar-link {
+    @apply flex gap-3 items-center py-2 px-4 rounded-xl transition-all duration-200 hover:bg-slate-50;
+  }
+
+  .sidebar-link.active {
+    @apply bg-primary text-white shadow-lg shadow-primary/20 hover:bg-primary/90;
+  }
+
+  .sidebar-label {
+    @apply text-sm font-semibold max-xl:hidden;
+  }
+
+  .sidebar-logo {
+    @apply text-xl font-bold font-ibm-plex-serif tracking-tight text-primary;
+  }
+
+  /* Auth */
+  .auth-form {
+    @apply flex min-h-screen w-full max-w-[480px] flex-col justify-center gap-8 py-12 px-6;
+  }
+
+  .form-btn {
+    @apply h-11 w-full bg-primary text-white font-semibold rounded-xl shadow-md hover:bg-primary/90 transition-all active:scale-[0.98];
+  }
+
+  .bank-card {
+    @apply relative flex h-[200px] w-full max-w-[340px] justify-between rounded-3xl overflow-hidden shadow-xl transition-transform hover:scale-[1.02] duration-300;
+  }
+
+  .bank-card_content {
+    @apply relative z-10 flex size-full flex-col justify-between p-6 bg-gradient-to-br from-slate-800 to-slate-950 text-white;
+  }
+
+  .profile-banner {
+    @apply h-[160px] w-full bg-slate-900 bg-gradient-mesh bg-cover bg-no-repeat;
+  }
+
+  .right-sidebar {
+    @apply no-scrollbar hidden h-screen max-h-screen flex-col border-l bg-white xl:flex w-[380px] xl:overflow-y-scroll !important;
+  }
+}
