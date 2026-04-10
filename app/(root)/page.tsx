@@ -19,7 +19,7 @@ const Home = async ({ searchParams }: SearchParamProps) => {
   if (!accounts) return;
 
   const accountsData = accounts;
-  const appwriteItemId = (id as string) || accountsData[0]?.bankId;
+  const appwriteItemId = (id as string) || accountsData[0]?.appwriteItemId;
 
   const account = accountsData.find((acc: Bank) => acc.appwriteItemId === appwriteItemId);
 

@@ -39,7 +39,7 @@ const MyBanks = async () => {
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {accounts && accounts.length > 0 ? (
               accounts.map((a: Bank) => (
-                <div key={a.id} className="transform transition-all hover:translate-y-[-4px]">
+                <div key={a.appwriteItemId} className="transform transition-all hover:translate-y-[-4px]">
                     <BankCard
                       account={a}
                       userName={loggedIn?.firstName}

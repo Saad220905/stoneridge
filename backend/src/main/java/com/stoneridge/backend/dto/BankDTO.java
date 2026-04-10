@@ -7,6 +7,7 @@ import com.stoneridge.backend.model.Bank;
  * Excludes sensitive fields like accessToken.
  */
 public class BankDTO {
+    private String id;
     private Long databaseId;
     private String userId;
     private String bankId;
@@ -23,6 +24,7 @@ public class BankDTO {
     public static BankDTO fromEntity(Bank bank) {
         if (bank == null) return null;
         BankDTO dto = new BankDTO();
+        dto.setId(bank.getAppwriteItemId());
         dto.setDatabaseId(bank.getDatabaseId());
         if (bank.getUser() != null) {
             dto.setUserId(bank.getUser().getUserId());
@@ -39,6 +41,8 @@ public class BankDTO {
     }
 
     // Getters and Setters
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
     public Long getDatabaseId() { return databaseId; }
     public void setDatabaseId(Long databaseId) { this.databaseId = databaseId; }
     public String getUserId() { return userId; }

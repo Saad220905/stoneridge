@@ -9,7 +9,7 @@ export const createLinkToken = async () => {
   try {
     const token = await getAuthToken();
     const response = await fetch(`${BACKEND_URL}/api/bank/create-link-token`, {
-      method: 'POST',
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`

@@ -65,6 +65,7 @@ declare type Account = {
 
 declare type Transaction = {
   id: string;
+  databaseId: number;
   name: string;
   paymentChannel: string;
   type: string;
@@ -82,6 +83,7 @@ declare type Transaction = {
 
 declare type Bank = {
   id: string;
+  databaseId: number;
   accountId: string;
   bankId: string;
   accessToken: string;

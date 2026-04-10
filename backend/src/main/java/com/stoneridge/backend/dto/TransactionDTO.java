@@ -7,6 +7,7 @@ import java.util.Date;
  * Data Transfer Object for Transaction information.
  */
 public class TransactionDTO {
+    private String id;
     private Long databaseId;
     private String userId;
     private String name;
@@ -29,6 +30,7 @@ public class TransactionDTO {
     public static TransactionDTO fromEntity(Transaction transaction) {
         if (transaction == null) return null;
         TransactionDTO dto = new TransactionDTO();
+        dto.setId(transaction.getAppwriteItemId());
         dto.setDatabaseId(transaction.getDatabaseId());
         if (transaction.getUser() != null) {
             dto.setUserId(transaction.getUser().getUserId());
@@ -51,6 +53,8 @@ public class TransactionDTO {
     }
 
     // Getters and Setters
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
     public Long getDatabaseId() { return databaseId; }
     public void setDatabaseId(Long databaseId) { this.databaseId = databaseId; }
     public String getUserId() { return userId; }
