@@ -247,8 +247,18 @@ declare interface DoughnutChartProps {
   accounts: (Bank | Account)[];
 }
 
-declare interface PaymentTransferFormProps {
-  accounts: (Bank | Account)[];
+declare type Goal = {
+  id: number;
+  name: string;
+  targetAmount: number;
+  currentAmount: number;
+  category: string;
+  targetDate: string;
+  status: 'active' | 'completed' | 'cancelled';
+};
+
+declare interface GoalProgressProps {
+  goals: Goal[];
 }
 
 // Actions

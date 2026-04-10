@@ -2,9 +2,11 @@ import HeaderBox from '@/components/HeaderBox';
 import RecentTransactions from '@/components/RecentTransactions';
 import RightSidebar from '@/components/RightSidebar';
 import TotalBalanceBox from '@/components/TotalBalanceBox';
+import GoalProgress from '@/components/GoalProgress';
 import { getBanks } from '@/lib/plaid';
 import { getLoggedInUser } from '@/lib/auth';
-import { getTransactions } from '@/lib/transactions'; // Import the new transactions client
+import { getTransactions } from '@/lib/transactions';
+import { getGoals } from '@/lib/goals';
 import { redirect } from 'next/navigation';
 
 const Home = async ({ searchParams }: SearchParamProps) => {
@@ -24,7 +26,10 @@ const Home = async ({ searchParams }: SearchParamProps) => {
   const account = accountsData.find((acc: Bank) => acc.appwriteItemId === appwriteItemId);
 
   // Fetch transactions using the new client
-  const transactions = await getTransactions(currentPage, 10, account?.appwriteItemId); // Pass bankId to filter transactions
+  const transactions = await getTransactions(currentPage, 10, account?.appwriteItemId); 
+
+  // Fetch goals
+  const goals = await getGoals();
 
   return (
     <section className="home">
@@ -43,6 +48,10 @@ const Home = async ({ searchParams }: SearchParamProps) => {
             totalCurrentBalance={accountsData.reduce((acc: number, cur: Bank) => acc + cur.currentBalance, 0)}
           />
         </header>
+
+        <div className="mt-8">
+            <GoalProgress goals={goals} />
+        </div>
 
         <RecentTransactions
           accounts={accountsData}

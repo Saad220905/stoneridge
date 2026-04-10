@@ -11,13 +11,14 @@ import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Footer from './Footer';
-import { LayoutDashboard, ReceiptText, Landmark, ArrowLeftRight, Menu } from 'lucide-react';
+import { LayoutDashboard, ReceiptText, Landmark, ArrowLeftRight, Menu, Target } from 'lucide-react';
 
 const iconMap: Record<string, any> = {
   '/': LayoutDashboard,
   '/transaction-history': ReceiptText,
   '/my-banks': Landmark,
   '/payment-transfer': ArrowLeftRight,
+  '/goals': Target,
 };
 
 const MobileNav = ({ user }: MobileNavProps) => {

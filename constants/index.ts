@@ -15,6 +15,10 @@ export const sidebarLinks = [
     route: '/payment-transfer',
     label: 'Fund Transfer',
   },
+  {
+    route: '/goals',
+    label: 'Savings Goals',
+  },
 ];
 
 export const topCategoryStyles = {
