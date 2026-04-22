@@ -33,7 +33,9 @@ public class BankController {
     @GetMapping("/banks")
     public ResponseEntity<List<BankDTO>> getBanks(Authentication authentication) throws Exception {
         String userEmail = authentication.getName();
-        return ResponseEntity.ok(bankService.getBanks(userEmail));
+        User user = userService.findUserEntityByEmail(userEmail)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        return ResponseEntity.ok(bankService.getBanks(user.getUserId()));
     }
 
     @GetMapping("/{id}")
@@ -46,7 +48,9 @@ public class BankController {
     @GetMapping("/account/{accountId}")
     public ResponseEntity<BankDTO> getBankByAccountId(@PathVariable String accountId, Authentication authentication) throws Exception {
         String userEmail = authentication.getName();
-        return bankService.getBankByAccountId(accountId, userEmail)
+        User user = userService.findUserEntityByEmail(userEmail)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        return bankService.getBankByAccountId(accountId, user.getUserId())
                 .map(ResponseEntity::ok)
                 .orElseThrow(() -> new ResourceNotFoundException("Bank not found for account ID: " + accountId));
     }
@@ -55,7 +59,9 @@ public class BankController {
     public ResponseEntity<?> exchangePublicToken(@RequestBody Map<String, String> request, Authentication authentication) throws Exception {
         String publicToken = request.get("publicToken");
         String userEmail = authentication.getName();
-        bankService.exchangePublicToken(userEmail, publicToken);
+        User user = userService.findUserEntityByEmail(userEmail)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        bankService.exchangePublicToken(user.getUserId(), publicToken);
         return ResponseEntity.ok(Map.of("message", "Public token exchanged successfully."));
     }
 

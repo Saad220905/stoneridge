@@ -261,6 +261,10 @@ declare interface GoalProgressProps {
   goals: Goal[];
 }
 
+declare interface PaymentTransferFormProps {
+  accounts: (Bank | Account)[];
+}
+
 // Actions
 declare interface getAccountsProps {
   userId: string;

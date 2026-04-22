@@ -11,6 +11,7 @@ public class UserDTO {
     private String email;
     private String firstName;
     private String lastName;
+    private String name;
     private String address1;
     private String city;
     private String state;
@@ -28,6 +29,7 @@ public class UserDTO {
         dto.setEmail(user.getEmail());
         dto.setFirstName(user.getFirstName());
         dto.setLastName(user.getLastName());
+        dto.setName(user.getFirstName() + " " + user.getLastName());
         dto.setAddress1(user.getAddress1());
         dto.setCity(user.getCity());
         dto.setState(user.getState());
@@ -47,6 +49,8 @@ public class UserDTO {
     public void setFirstName(String firstName) { this.firstName = firstName; }
     public String getLastName() { return lastName; }
     public void setLastName(String lastName) { this.lastName = lastName; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
     public String getAddress1() { return address1; }
     public void setAddress1(String address1) { this.address1 = address1; }
     public String getCity() { return city; }

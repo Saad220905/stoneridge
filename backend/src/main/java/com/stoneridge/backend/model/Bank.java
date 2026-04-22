@@ -20,6 +20,9 @@ public class Bank {
     @Column(nullable = false)
     private String accountId; // Encrypted Plaid account ID
 
+    @Column(unique = true, nullable = false)
+    private String accountIdHash; // Deterministic hash for lookups
+
     @Column(nullable = false)
     private String accessToken; // Encrypted Plaid access token
 
@@ -39,13 +42,14 @@ public class Bank {
     }
 
     // All-argument constructor
-    public Bank(Long databaseId, User user, String bankId, String accountId, String accessToken,
+    public Bank(Long databaseId, User user, String bankId, String accountId, String accountIdHash, String accessToken,
                 String fundingSourceUrl, String shareableId, String appwriteItemId,
                 String mask, String name, double currentBalance) {
         this.databaseId = databaseId;
         this.user = user;
         this.bankId = bankId;
         this.accountId = accountId;
+        this.accountIdHash = accountIdHash;
         this.accessToken = accessToken;
         this.fundingSourceUrl = fundingSourceUrl;
         this.shareableId = shareableId;
@@ -64,6 +68,8 @@ public class Bank {
     public void setBankId(String bankId) { this.bankId = bankId; }
     public String getAccountId() { return accountId; }
     public void setAccountId(String accountId) { this.accountId = accountId; }
+    public String getAccountIdHash() { return accountIdHash; }
+    public void setAccountIdHash(String accountIdHash) { this.accountIdHash = accountIdHash; }
     public String getAccessToken() { return accessToken; }
     public void setAccessToken(String accessToken) { this.accessToken = accessToken; }
     public String getFundingSourceUrl() { return fundingSourceUrl; }

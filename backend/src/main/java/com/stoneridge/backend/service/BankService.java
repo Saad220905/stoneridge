@@ -109,12 +109,14 @@ public class BankService {
         Bank newBank = new Bank();
         newBank.setUser(user);
         newBank.setBankId(itemId);
-        newBank.setAccountId(EncryptionUtil.encrypt(accountData.getAccountId()));
+        String rawAccountId = accountData.getAccountId();
+        newBank.setAccountId(EncryptionUtil.encrypt(rawAccountId));
+        newBank.setAccountIdHash(EncryptionUtil.hash(rawAccountId));
         newBank.setAccessToken(EncryptionUtil.encrypt(accessToken));
         newBank.setFundingSourceUrl(fundingSourceUrl);
         
-        String encryptedAccountId = EncryptionUtil.encrypt(accountData.getAccountId());
-        newBank.setShareableId(encryptedAccountId);
+        // Use deterministic hash for shareableId to allow searching
+        newBank.setShareableId(EncryptionUtil.hash(rawAccountId));
         
         newBank.setMask(accountData.getMask());
         newBank.setName(accountData.getName());
@@ -151,7 +153,7 @@ public class BankService {
     }
 
     public Optional<BankDTO> getBankByAccountId(String accountId, String userId) throws Exception {
-        Optional<Bank> bankOptional = bankRepository.findByAccountId(EncryptionUtil.encrypt(accountId));
+        Optional<Bank> bankOptional = bankRepository.findByAccountIdHash(EncryptionUtil.hash(accountId));
         
         if (bankOptional.isPresent()) {
             Bank bank = bankOptional.get();
