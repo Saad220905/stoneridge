@@ -12,54 +12,54 @@ public class Bank {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_database_id", nullable = false)
-    private User user; // Reference to the User entity
+    private User user;
 
     @Column(nullable = false)
-    private String bankId; // Plaid item ID
+    private String bankId;
 
     @Column(nullable = false)
-    private String accountId; // Encrypted Plaid account ID
+    private String accountId;
 
     @Column(unique = true, nullable = false)
-    private String accountIdHash; // Deterministic hash for lookups
+    private String accountIdHash;
 
     @Column(nullable = false)
-    private String accessToken; // Encrypted Plaid access token
+    private String accessToken;
 
     private String fundingSourceUrl;
 
     @Column(nullable = false)
-    private String shareableId; // Encrypted account ID
+    private String shareableId;
     
-    private String appwriteItemId; // For compatibility with frontend components expecting this field
+    private String appwriteItemId;
 
     private String mask;
     private String name;
     private double currentBalance;
 
-    // No-argument constructor
-    public Bank() {
+    public Bank() {}
+
+    public static BankBuilder builder() {
+        return new BankBuilder();
     }
 
-    // All-argument constructor
-    public Bank(Long databaseId, User user, String bankId, String accountId, String accountIdHash, String accessToken,
-                String fundingSourceUrl, String shareableId, String appwriteItemId,
-                String mask, String name, double currentBalance) {
-        this.databaseId = databaseId;
-        this.user = user;
-        this.bankId = bankId;
-        this.accountId = accountId;
-        this.accountIdHash = accountIdHash;
-        this.accessToken = accessToken;
-        this.fundingSourceUrl = fundingSourceUrl;
-        this.shareableId = shareableId;
-        this.appwriteItemId = appwriteItemId;
-        this.mask = mask;
-        this.name = name;
-        this.currentBalance = currentBalance;
+    public static class BankBuilder {
+        private Bank bank = new Bank();
+        public BankBuilder databaseId(Long id) { bank.databaseId = id; return this; }
+        public BankBuilder user(User user) { bank.user = user; return this; }
+        public BankBuilder bankId(String id) { bank.bankId = id; return this; }
+        public BankBuilder accountId(String id) { bank.accountId = id; return this; }
+        public BankBuilder accountIdHash(String hash) { bank.accountIdHash = hash; return this; }
+        public BankBuilder accessToken(String token) { bank.accessToken = token; return this; }
+        public BankBuilder fundingSourceUrl(String url) { bank.fundingSourceUrl = url; return this; }
+        public BankBuilder shareableId(String id) { bank.shareableId = id; return this; }
+        public BankBuilder appwriteItemId(String id) { bank.appwriteItemId = id; return this; }
+        public BankBuilder mask(String mask) { bank.mask = mask; return this; }
+        public BankBuilder name(String name) { bank.name = name; return this; }
+        public BankBuilder currentBalance(double balance) { bank.currentBalance = balance; return this; }
+        public Bank build() { return bank; }
     }
 
-    // Manual getters and setters
     public Long getDatabaseId() { return databaseId; }
     public void setDatabaseId(Long databaseId) { this.databaseId = databaseId; }
     public User getUser() { return user; }

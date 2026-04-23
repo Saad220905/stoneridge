@@ -1,15 +1,10 @@
 package com.stoneridge.backend.dto;
 
-import com.stoneridge.backend.model.Transaction;
 import java.util.Date;
 
-/**
- * Data Transfer Object for Transaction information.
- */
 public class TransactionDTO {
-    private String id;
     private Long databaseId;
-    private String userId;
+    private String appwriteItemId;
     private String name;
     private double amount;
     private String currency;
@@ -19,46 +14,43 @@ public class TransactionDTO {
     private String status;
     private String paymentChannel;
     private String senderId;
-    private String senderBankId;
     private String receiverId;
+    private String senderBankId;
     private String receiverBankId;
     private String email;
-    private String appwriteItemId;
+    private String userId;
 
     public TransactionDTO() {}
 
-    public static TransactionDTO fromEntity(Transaction transaction) {
-        if (transaction == null) return null;
-        TransactionDTO dto = new TransactionDTO();
-        dto.setId(transaction.getAppwriteItemId());
-        dto.setDatabaseId(transaction.getDatabaseId());
-        if (transaction.getUser() != null) {
-            dto.setUserId(transaction.getUser().getUserId());
-        }
-        dto.setName(transaction.getName());
-        dto.setAmount(transaction.getAmount());
-        dto.setCurrency(transaction.getCurrency());
-        dto.setDate(transaction.getDate());
-        dto.setCategory(transaction.getCategory());
-        dto.setType(transaction.getType());
-        dto.setStatus(transaction.getStatus());
-        dto.setPaymentChannel(transaction.getPaymentChannel());
-        dto.setSenderId(transaction.getSenderId());
-        dto.setSenderBankId(transaction.getSenderBankId());
-        dto.setReceiverId(transaction.getReceiverId());
-        dto.setReceiverBankId(transaction.getReceiverBankId());
-        dto.setEmail(transaction.getEmail());
-        dto.setAppwriteItemId(transaction.getAppwriteItemId());
-        return dto;
+    public static TransactionDTOBuilder builder() {
+        return new TransactionDTOBuilder();
     }
 
-    // Getters and Setters
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
+    public static class TransactionDTOBuilder {
+        private TransactionDTO dto = new TransactionDTO();
+        public TransactionDTOBuilder databaseId(Long id) { dto.databaseId = id; return this; }
+        public TransactionDTOBuilder appwriteItemId(String id) { dto.appwriteItemId = id; return this; }
+        public TransactionDTOBuilder name(String name) { dto.name = name; return this; }
+        public TransactionDTOBuilder amount(double amount) { dto.amount = amount; return this; }
+        public TransactionDTOBuilder currency(String currency) { dto.currency = currency; return this; }
+        public TransactionDTOBuilder date(Date date) { dto.date = date; return this; }
+        public TransactionDTOBuilder category(String category) { dto.category = category; return this; }
+        public TransactionDTOBuilder type(String type) { dto.type = type; return this; }
+        public TransactionDTOBuilder status(String status) { dto.status = status; return this; }
+        public TransactionDTOBuilder paymentChannel(String channel) { dto.paymentChannel = channel; return this; }
+        public TransactionDTOBuilder senderId(String id) { dto.senderId = id; return this; }
+        public TransactionDTOBuilder receiverId(String id) { dto.receiverId = id; return this; }
+        public TransactionDTOBuilder senderBankId(String id) { dto.senderBankId = id; return this; }
+        public TransactionDTOBuilder receiverBankId(String id) { dto.receiverBankId = id; return this; }
+        public TransactionDTOBuilder email(String email) { dto.email = email; return this; }
+        public TransactionDTOBuilder userId(String id) { dto.userId = id; return this; }
+        public TransactionDTO build() { return dto; }
+    }
+
     public Long getDatabaseId() { return databaseId; }
     public void setDatabaseId(Long databaseId) { this.databaseId = databaseId; }
-    public String getUserId() { return userId; }
-    public void setUserId(String userId) { this.userId = userId; }
+    public String getAppwriteItemId() { return appwriteItemId; }
+    public void setAppwriteItemId(String appwriteItemId) { this.appwriteItemId = appwriteItemId; }
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
     public double getAmount() { return amount; }
@@ -77,14 +69,14 @@ public class TransactionDTO {
     public void setPaymentChannel(String paymentChannel) { this.paymentChannel = paymentChannel; }
     public String getSenderId() { return senderId; }
     public void setSenderId(String senderId) { this.senderId = senderId; }
-    public String getSenderBankId() { return senderBankId; }
-    public void setSenderBankId(String senderBankId) { this.senderBankId = senderBankId; }
     public String getReceiverId() { return receiverId; }
     public void setReceiverId(String receiverId) { this.receiverId = receiverId; }
+    public String getSenderBankId() { return senderBankId; }
+    public void setSenderBankId(String senderBankId) { this.senderBankId = senderBankId; }
     public String getReceiverBankId() { return receiverBankId; }
     public void setReceiverBankId(String receiverBankId) { this.receiverBankId = receiverBankId; }
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
-    public String getAppwriteItemId() { return appwriteItemId; }
-    public void setAppwriteItemId(String appwriteItemId) { this.appwriteItemId = appwriteItemId; }
+    public String getUserId() { return userId; }
+    public void setUserId(String userId) { this.userId = userId; }
 }

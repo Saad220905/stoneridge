@@ -25,26 +25,32 @@ public class Goal {
     private double currentAmount;
 
     @Column(nullable = false)
-    private String category; // e.g., 'Travel', 'Emergency', 'Purchase'
+    private String category;
 
     @Column(nullable = false)
     private Date targetDate;
 
-    private String status; // 'active', 'completed', 'cancelled'
+    private String status;
 
     public Goal() {}
 
-    public Goal(User user, String name, double targetAmount, double currentAmount, String category, Date targetDate, String status) {
-        this.user = user;
-        this.name = name;
-        this.targetAmount = targetAmount;
-        this.currentAmount = currentAmount;
-        this.category = category;
-        this.targetDate = targetDate;
-        this.status = status;
+    public static GoalBuilder builder() {
+        return new GoalBuilder();
     }
 
-    // Getters and Setters
+    public static class GoalBuilder {
+        private Goal goal = new Goal();
+        public GoalBuilder id(Long id) { goal.id = id; return this; }
+        public GoalBuilder user(User user) { goal.user = user; return this; }
+        public GoalBuilder name(String name) { goal.name = name; return this; }
+        public GoalBuilder targetAmount(double amount) { goal.targetAmount = amount; return this; }
+        public GoalBuilder currentAmount(double amount) { goal.currentAmount = amount; return this; }
+        public GoalBuilder category(String category) { goal.category = category; return this; }
+        public GoalBuilder targetDate(Date date) { goal.targetDate = date; return this; }
+        public GoalBuilder status(String status) { goal.status = status; return this; }
+        public Goal build() { return goal; }
+    }
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public User getUser() { return user; }

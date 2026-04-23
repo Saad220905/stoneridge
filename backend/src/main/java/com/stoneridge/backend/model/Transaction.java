@@ -1,7 +1,6 @@
 package com.stoneridge.backend.model;
 
 import jakarta.persistence.*;
-
 import java.util.Date;
 
 @Entity
@@ -14,11 +13,11 @@ public class Transaction {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_database_id", nullable = false)
-    private User user; // The user who initiated/owns this transaction
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bank_database_id") // Optional: can be null for peer-to-peer transfers not directly tied to one's own bank account
-    private Bank bank; // The bank account associated with this transaction (if applicable)
+    @JoinColumn(name = "bank_database_id")
+    private Bank bank;
 
     @Column(nullable = false)
     private String name;
@@ -33,47 +32,46 @@ public class Transaction {
     private Date date;
 
     private String category;
-    private String type; // e.g., 'credit' or 'debit'
-    private String status; // e.g., 'pending', 'posted'
+    private String type;
+    private String status;
     private String paymentChannel;
 
-    // Fields for transfers - these are now stored as encrypted strings
-    private String senderId; // The userId of the sender (encrypted)
-    private String senderBankId; // The bankId of the sender's bank (encrypted)
-    private String receiverId; // The userId of the receiver (encrypted)
-    private String receiverBankId; // The bankId of the receiver's bank (encrypted)
-    private String email; // Receiver's email for transfers (encrypted)
+    private String senderId;
+    private String senderBankId;
+    private String receiverId;
+    private String receiverBankId;
+    private String email;
     
-    private String appwriteItemId; // For compatibility with frontend components
+    private String appwriteItemId;
 
-    // No-argument constructor
-    public Transaction() {
+    public Transaction() {}
+
+    public static TransactionBuilder builder() {
+        return new TransactionBuilder();
     }
 
-    // All-argument constructor
-    public Transaction(Long databaseId, User user, Bank bank, String name, double amount, String currency, Date date,
-                       String category, String type, String status, String paymentChannel, String senderId,
-                       String senderBankId, String receiverId, String receiverBankId, String email, String appwriteItemId) {
-        this.databaseId = databaseId;
-        this.user = user;
-        this.bank = bank;
-        this.name = name;
-        this.amount = amount;
-        this.currency = currency;
-        this.date = date;
-        this.category = category;
-        this.type = type;
-        this.status = status;
-        this.paymentChannel = paymentChannel;
-        this.senderId = senderId;
-        this.senderBankId = senderBankId;
-        this.receiverId = receiverId;
-        this.receiverBankId = receiverBankId;
-        this.email = email;
-        this.appwriteItemId = appwriteItemId;
+    public static class TransactionBuilder {
+        private Transaction transaction = new Transaction();
+        public TransactionBuilder databaseId(Long id) { transaction.databaseId = id; return this; }
+        public TransactionBuilder user(User user) { transaction.user = user; return this; }
+        public TransactionBuilder bank(Bank bank) { transaction.bank = bank; return this; }
+        public TransactionBuilder name(String name) { transaction.name = name; return this; }
+        public TransactionBuilder amount(double amount) { transaction.amount = amount; return this; }
+        public TransactionBuilder currency(String currency) { transaction.currency = currency; return this; }
+        public TransactionBuilder date(Date date) { transaction.date = date; return this; }
+        public TransactionBuilder category(String category) { transaction.category = category; return this; }
+        public TransactionBuilder type(String type) { transaction.type = type; return this; }
+        public TransactionBuilder status(String status) { transaction.status = status; return this; }
+        public TransactionBuilder paymentChannel(String channel) { transaction.paymentChannel = channel; return this; }
+        public TransactionBuilder senderId(String id) { transaction.senderId = id; return this; }
+        public TransactionBuilder senderBankId(String id) { transaction.senderBankId = id; return this; }
+        public TransactionBuilder receiverId(String id) { transaction.receiverId = id; return this; }
+        public TransactionBuilder receiverBankId(String id) { transaction.receiverBankId = id; return this; }
+        public TransactionBuilder email(String email) { transaction.email = email; return this; }
+        public TransactionBuilder appwriteItemId(String id) { transaction.appwriteItemId = id; return this; }
+        public Transaction build() { return transaction; }
     }
 
-    // Manual getters and setters
     public Long getDatabaseId() { return databaseId; }
     public void setDatabaseId(Long databaseId) { this.databaseId = databaseId; }
     public User getUser() { return user; }

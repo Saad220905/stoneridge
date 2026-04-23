@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-/**
- * Controller for handling Dwolla-related operations.
- */
 @RestController
 @RequestMapping("/api/dwolla")
 public class DwollaController {
@@ -27,14 +24,14 @@ public class DwollaController {
 
     @PostMapping("/create-transfer")
     public ResponseEntity<Map<String, String>> createTransfer(@RequestBody DwollaTransferRequest request, Authentication authentication) throws Exception {
-        if (request.getSourceFundingSourceUrl() == null || request.getDestinationFundingSourceUrl() == null || request.getAmount() == null) {
+        if (request.sourceFundingSourceUrl() == null || request.destinationFundingSourceUrl() == null || request.amount() == null) {
             throw new BadRequestException("Source funding source, destination funding source, and amount are required.");
         }
 
         String transferUrl = dwollaService.createTransfer(
-                request.getSourceFundingSourceUrl(),
-                request.getDestinationFundingSourceUrl(),
-                request.getAmount()
+                request.sourceFundingSourceUrl(),
+                request.destinationFundingSourceUrl(),
+                request.amount()
         );
         return ResponseEntity.ok(Map.of("transferUrl", transferUrl));
     }

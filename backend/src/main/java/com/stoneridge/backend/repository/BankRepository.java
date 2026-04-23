@@ -13,4 +13,5 @@ public interface BankRepository extends JpaRepository<Bank, Long> {
     List<Bank> findByUser(User user);
     Optional<Bank> findByShareableId(String shareableId);
     Optional<Bank> findByAccountIdHash(String accountIdHash);
+    Optional<Bank> findByAppwriteItemId(String appwriteItemId);
 }

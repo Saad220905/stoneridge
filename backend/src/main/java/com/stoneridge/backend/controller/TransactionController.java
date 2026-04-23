@@ -2,7 +2,6 @@ package com.stoneridge.backend.controller;
 
 import com.stoneridge.backend.dto.TransactionDTO;
 import com.stoneridge.backend.dto.TransactionRequest;
-import com.stoneridge.backend.exception.BadRequestException;
 import com.stoneridge.backend.exception.ResourceNotFoundException;
 import com.stoneridge.backend.model.User;
 import com.stoneridge.backend.service.TransactionService;
@@ -16,9 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * Controller for handling transaction-related requests.
- */
 @RestController
 @RequestMapping("/api/transactions")
 public class TransactionController {

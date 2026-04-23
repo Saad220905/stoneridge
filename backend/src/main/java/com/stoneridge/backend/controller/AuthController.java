@@ -49,9 +49,9 @@ public class AuthController {
             UserDTO newUser = userService.createEncryptedUserDocument(generatedUserId, userData);
             
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(userData.getEmail(), userData.getPassword())
+                    new UsernamePasswordAuthenticationToken(userData.email(), userData.password())
             );
-            UserDetails userDetails = userDetailsService.loadUserByUsername(userData.getEmail());
+            UserDetails userDetails = userDetailsService.loadUserByUsername(userData.email());
             String token = jwtUtil.generateToken(userDetails);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(new AuthResponse(token, newUser));
@@ -65,14 +65,14 @@ public class AuthController {
     public ResponseEntity<AuthResponse> signIn(@RequestBody AuthRequest authRequest) {
         try {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword())
+                    new UsernamePasswordAuthenticationToken(authRequest.email(), authRequest.password())
             );
 
             if (authentication.isAuthenticated()) {
-                UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getEmail());
+                UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.email());
                 String token = jwtUtil.generateToken(userDetails);
-                UserDTO user = userService.getUserByEmail(authRequest.getEmail())
-                        .orElseThrow(() -> new ResourceNotFoundException("User not found for email: " + authRequest.getEmail()));
+                UserDTO user = userService.getUserByEmail(authRequest.email())
+                        .orElseThrow(() -> new ResourceNotFoundException("User not found for email: " + authRequest.email()));
                 return ResponseEntity.ok(new AuthResponse(token, user));
             } else {
                 throw new UnauthorizedException("Authentication failed.");

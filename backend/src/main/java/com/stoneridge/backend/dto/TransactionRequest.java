@@ -1,54 +1,52 @@
 package com.stoneridge.backend.dto;
 
-public class TransactionRequest {
-    private String name;
-    private Double amount;
-    private String currency;
-    private String category;
-    private String type;
-    private String status;
-    private String paymentChannel;
-    private String senderId;
-    private String receiverId;
-    private String email;
-    private String senderBankId;
-    private String receiverBankId;
+public record TransactionRequest(
+    String name,
+    Double amount,
+    String currency,
+    String category,
+    String type,
+    String status,
+    String paymentChannel,
+    String senderId,
+    String senderBankId,
+    String receiverId,
+    String receiverBankId,
+    String email
+) {
+    public static TransactionRequestBuilder builder() {
+        return new TransactionRequestBuilder();
+    }
 
-    public TransactionRequest() {}
+    public static class TransactionRequestBuilder {
+        private String name;
+        private Double amount;
+        private String currency;
+        private String category;
+        private String type;
+        private String status;
+        private String paymentChannel;
+        private String senderId;
+        private String senderBankId;
+        private String receiverId;
+        private String receiverBankId;
+        private String email;
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+        public TransactionRequestBuilder name(String name) { this.name = name; return this; }
+        public TransactionRequestBuilder amount(Double amount) { this.amount = amount; return this; }
+        public TransactionRequestBuilder currency(String currency) { this.currency = currency; return this; }
+        public TransactionRequestBuilder category(String category) { this.category = category; return this; }
+        public TransactionRequestBuilder type(String type) { this.type = type; return this; }
+        public TransactionRequestBuilder status(String status) { this.status = status; return this; }
+        public TransactionRequestBuilder paymentChannel(String channel) { this.paymentChannel = channel; return this; }
+        public TransactionRequestBuilder senderId(String id) { this.senderId = id; return this; }
+        public TransactionRequestBuilder senderBankId(String id) { this.senderBankId = id; return this; }
+        public TransactionRequestBuilder receiverId(String id) { this.receiverId = id; return this; }
+        public TransactionRequestBuilder receiverBankId(String id) { this.receiverBankId = id; return this; }
+        public TransactionRequestBuilder email(String email) { this.email = email; return this; }
 
-    public Double getAmount() { return amount; }
-    public void setAmount(Double amount) { this.amount = amount; }
-
-    public String getCurrency() { return currency; }
-    public void setCurrency(String currency) { this.currency = currency; }
-
-    public String getCategory() { return category; }
-    public void setCategory(String category) { this.category = category; }
-
-    public String getType() { return type; }
-    public void setType(String type) { this.type = type; }
-
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
-
-    public String getPaymentChannel() { return paymentChannel; }
-    public void setPaymentChannel(String paymentChannel) { this.paymentChannel = paymentChannel; }
-
-    public String getSenderId() { return senderId; }
-    public void setSenderId(String senderId) { this.senderId = senderId; }
-
-    public String getReceiverId() { return receiverId; }
-    public void setReceiverId(String receiverId) { this.receiverId = receiverId; }
-
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-
-    public String getSenderBankId() { return senderBankId; }
-    public void setSenderBankId(String senderBankId) { this.senderBankId = senderBankId; }
-
-    public String getReceiverBankId() { return receiverBankId; }
-    public void setReceiverBankId(String receiverBankId) { this.receiverBankId = receiverBankId; }
+        public TransactionRequest build() {
+            return new TransactionRequest(name, amount, currency, category, type, status, paymentChannel, senderId, senderBankId, receiverId, receiverBankId, email);
+        }
+    }
 }

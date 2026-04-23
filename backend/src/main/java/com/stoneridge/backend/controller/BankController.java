@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Controller for managing bank-related operations.
- */
 @RestController
 @RequestMapping("/api/bank")
 public class BankController {

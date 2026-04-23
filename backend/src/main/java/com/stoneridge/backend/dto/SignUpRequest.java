@@ -1,46 +1,46 @@
 package com.stoneridge.backend.dto;
 
-public class SignUpRequest {
-    private String email;
-    private String password;
-    private String firstName;
-    private String lastName;
-    private String address1;
-    private String city;
-    private String state;
-    private String postalCode;
-    private String dateOfBirth;
-    private String ssn;
+public record SignUpRequest(
+    String email,
+    String password,
+    String firstName,
+    String lastName,
+    String address1,
+    String city,
+    String state,
+    String postalCode,
+    String dateOfBirth,
+    String ssn
+) {
+    public static SignUpRequestBuilder builder() {
+        return new SignUpRequestBuilder();
+    }
 
-    public SignUpRequest() {}
+    public static class SignUpRequestBuilder {
+        private String email;
+        private String password;
+        private String firstName;
+        private String lastName;
+        private String address1;
+        private String city;
+        private String state;
+        private String postalCode;
+        private String dateOfBirth;
+        private String ssn;
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+        public SignUpRequestBuilder email(String email) { this.email = email; return this; }
+        public SignUpRequestBuilder password(String password) { this.password = password; return this; }
+        public SignUpRequestBuilder firstName(String firstName) { this.firstName = firstName; return this; }
+        public SignUpRequestBuilder lastName(String lastName) { this.lastName = lastName; return this; }
+        public SignUpRequestBuilder address1(String address1) { this.address1 = address1; return this; }
+        public SignUpRequestBuilder city(String city) { this.city = city; return this; }
+        public SignUpRequestBuilder state(String state) { this.state = state; return this; }
+        public SignUpRequestBuilder postalCode(String postalCode) { this.postalCode = postalCode; return this; }
+        public SignUpRequestBuilder dateOfBirth(String dateOfBirth) { this.dateOfBirth = dateOfBirth; return this; }
+        public SignUpRequestBuilder ssn(String ssn) { this.ssn = ssn; return this; }
 
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
-
-    public String getFirstName() { return firstName; }
-    public void setFirstName(String firstName) { this.firstName = firstName; }
-
-    public String getLastName() { return lastName; }
-    public void setLastName(String lastName) { this.lastName = lastName; }
-
-    public String getAddress1() { return address1; }
-    public void setAddress1(String address1) { this.address1 = address1; }
-
-    public String getCity() { return city; }
-    public void setCity(String city) { this.city = city; }
-
-    public String getState() { return state; }
-    public void setState(String state) { this.state = state; }
-
-    public String getPostalCode() { return postalCode; }
-    public void setPostalCode(String postalCode) { this.postalCode = postalCode; }
-
-    public String getDateOfBirth() { return dateOfBirth; }
-    public void setDateOfBirth(String dateOfBirth) { this.dateOfBirth = dateOfBirth; }
-
-    public String getSsn() { return ssn; }
-    public void setSsn(String ssn) { this.ssn = ssn; }
+        public SignUpRequest build() {
+            return new SignUpRequest(email, password, firstName, lastName, address1, city, state, postalCode, dateOfBirth, ssn);
+        }
+    }
 }

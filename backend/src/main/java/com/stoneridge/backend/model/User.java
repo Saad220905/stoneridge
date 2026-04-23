@@ -1,7 +1,6 @@
 package com.stoneridge.backend.model;
 
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,28 +10,28 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long databaseId; // Primary key for JPA
+    private Long databaseId;
 
     @Column(unique = true, nullable = false)
-    private String userId; // Unique ID (formerly from Appwrite)
+    private String userId;
 
     @Column(nullable = false)
-    private String email; // Stored encrypted
+    private String email;
 
     @Column(unique = true, nullable = false)
-    private String emailHash; // Deterministic hash for lookups
+    private String emailHash;
 
     @Column(nullable = false)
-    private String password; // Stored hashed
+    private String password;
 
-    private String firstName; // Stored encrypted
-    private String lastName; // Stored encrypted
-    private String address1; // Stored encrypted
-    private String city;     // Stored encrypted
-    private String state;    // Stored encrypted
-    private String postalCode; // Stored encrypted
-    private String dateOfBirth; // Stored encrypted
-    private String ssn;      // Stored encrypted
+    private String firstName;
+    private String lastName;
+    private String address1;
+    private String city;
+    private String state;
+    private String postalCode;
+    private String dateOfBirth;
+    private String ssn;
 
     private String dwollaCustomerId;
     private String dwollaCustomerUrl;
@@ -43,14 +42,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Transaction> transactions = new ArrayList<>();
 
-    // No-argument constructor
-    public User() {
-    }
+    public User() {}
 
-    // All-argument constructor
-    public User(Long databaseId, String userId, String email, String emailHash, String password, String firstName, String lastName,
-                String address1, String city, String state, String postalCode, String dateOfBirth, String ssn,
-                String dwollaCustomerId, String dwollaCustomerUrl) {
+    public User(Long databaseId, String userId, String email, String emailHash, String password, String firstName, String lastName, String address1, String city, String state, String postalCode, String dateOfBirth, String ssn, String dwollaCustomerId, String dwollaCustomerUrl) {
         this.databaseId = databaseId;
         this.userId = userId;
         this.email = email;
@@ -68,8 +62,31 @@ public class User {
         this.dwollaCustomerUrl = dwollaCustomerUrl;
     }
 
+    // Static builder-like method for convenience
+    public static UserBuilder builder() {
+        return new UserBuilder();
+    }
 
-    // Manual getters and setters
+    public static class UserBuilder {
+        private User user = new User();
+        public UserBuilder databaseId(Long id) { user.databaseId = id; return this; }
+        public UserBuilder userId(String id) { user.userId = id; return this; }
+        public UserBuilder email(String email) { user.email = email; return this; }
+        public UserBuilder emailHash(String hash) { user.emailHash = hash; return this; }
+        public UserBuilder password(String pw) { user.password = pw; return this; }
+        public UserBuilder firstName(String fn) { user.firstName = fn; return this; }
+        public UserBuilder lastName(String ln) { user.lastName = ln; return this; }
+        public UserBuilder address1(String a1) { user.address1 = a1; return this; }
+        public UserBuilder city(String c) { user.city = c; return this; }
+        public UserBuilder state(String s) { user.state = s; return this; }
+        public UserBuilder postalCode(String pc) { user.postalCode = pc; return this; }
+        public UserBuilder dateOfBirth(String dob) { user.dateOfBirth = dob; return this; }
+        public UserBuilder ssn(String ssn) { user.ssn = ssn; return this; }
+        public UserBuilder dwollaCustomerId(String id) { user.dwollaCustomerId = id; return this; }
+        public UserBuilder dwollaCustomerUrl(String url) { user.dwollaCustomerUrl = url; return this; }
+        public User build() { return user; }
+    }
+
     public Long getDatabaseId() { return databaseId; }
     public void setDatabaseId(Long databaseId) { this.databaseId = databaseId; }
     public String getUserId() { return userId; }

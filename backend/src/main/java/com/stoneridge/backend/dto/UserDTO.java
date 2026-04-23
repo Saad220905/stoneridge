@@ -2,10 +2,6 @@ package com.stoneridge.backend.dto;
 
 import com.stoneridge.backend.model.User;
 
-/**
- * Data Transfer Object for User information.
- * Excludes sensitive fields like password, emailHash, and ssn.
- */
 public class UserDTO {
     private String userId;
     private String email;
@@ -22,25 +18,45 @@ public class UserDTO {
 
     public UserDTO() {}
 
-    public static UserDTO fromEntity(User user) {
-        if (user == null) return null;
-        UserDTO dto = new UserDTO();
-        dto.setUserId(user.getUserId());
-        dto.setEmail(user.getEmail());
-        dto.setFirstName(user.getFirstName());
-        dto.setLastName(user.getLastName());
-        dto.setName(user.getFirstName() + " " + user.getLastName());
-        dto.setAddress1(user.getAddress1());
-        dto.setCity(user.getCity());
-        dto.setState(user.getState());
-        dto.setPostalCode(user.getPostalCode());
-        dto.setDateOfBirth(user.getDateOfBirth());
-        dto.setDwollaCustomerId(user.getDwollaCustomerId());
-        dto.setDwollaCustomerUrl(user.getDwollaCustomerUrl());
-        return dto;
+    public static UserDTOBuilder builder() {
+        return new UserDTOBuilder();
     }
 
-    // Getters and Setters
+    public static class UserDTOBuilder {
+        private UserDTO dto = new UserDTO();
+        public UserDTOBuilder userId(String id) { dto.userId = id; return this; }
+        public UserDTOBuilder email(String email) { dto.email = email; return this; }
+        public UserDTOBuilder firstName(String fn) { dto.firstName = fn; return this; }
+        public UserDTOBuilder lastName(String ln) { dto.lastName = ln; return this; }
+        public UserDTOBuilder name(String name) { dto.name = name; return this; }
+        public UserDTOBuilder address1(String a1) { dto.address1 = a1; return this; }
+        public UserDTOBuilder city(String c) { dto.city = c; return this; }
+        public UserDTOBuilder state(String s) { dto.state = s; return this; }
+        public UserDTOBuilder postalCode(String pc) { dto.postalCode = pc; return this; }
+        public UserDTOBuilder dateOfBirth(String dob) { dto.dateOfBirth = dob; return this; }
+        public UserDTOBuilder dwollaCustomerId(String id) { dto.dwollaCustomerId = id; return this; }
+        public UserDTOBuilder dwollaCustomerUrl(String url) { dto.dwollaCustomerUrl = url; return this; }
+        public UserDTO build() { return dto; }
+    }
+
+    public static UserDTO fromEntity(User user) {
+        if (user == null) return null;
+        return UserDTO.builder()
+                .userId(user.getUserId())
+                .email(user.getEmail())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .name(user.getFirstName() + " " + user.getLastName())
+                .address1(user.getAddress1())
+                .city(user.getCity())
+                .state(user.getState())
+                .postalCode(user.getPostalCode())
+                .dateOfBirth(user.getDateOfBirth())
+                .dwollaCustomerId(user.getDwollaCustomerId())
+                .dwollaCustomerUrl(user.getDwollaCustomerUrl())
+                .build();
+    }
+
     public String getUserId() { return userId; }
     public void setUserId(String userId) { this.userId = userId; }
     public String getEmail() { return email; }

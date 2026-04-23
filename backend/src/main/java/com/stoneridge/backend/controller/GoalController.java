@@ -6,6 +6,8 @@ import com.stoneridge.backend.service.GoalService;
 import com.stoneridge.backend.service.UserService;
 import com.stoneridge.backend.security.JwtUtil;
 import com.stoneridge.backend.exception.ResourceNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +17,7 @@ import java.util.List;
 @RequestMapping("/api/goals")
 public class GoalController {
 
+    private static final Logger log = LoggerFactory.getLogger(GoalController.class);
     private final GoalService goalService;
     private final UserService userService;
     private final JwtUtil jwtUtil;

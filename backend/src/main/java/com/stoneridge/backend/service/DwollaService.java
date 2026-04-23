@@ -15,14 +15,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-/**
- * Service for interacting with Dwolla API.
- */
 @Service
 public class DwollaService {
 
     private static final Logger log = LoggerFactory.getLogger(DwollaService.class);
-
     private final Dwolla dwollaClient;
     private final ObjectMapper objectMapper;
 
@@ -31,7 +27,6 @@ public class DwollaService {
         this.objectMapper = objectMapper;
     }
 
-    // Helper to convert Java Map to Kotlin Pair array for JsonBody
     @SuppressWarnings("unchecked")
     private Pair<String, Object>[] toKotlinPairs(Map<String, Object> javaMap) {
         if (javaMap == null) return new Pair[0];
@@ -41,7 +36,6 @@ public class DwollaService {
                 .toArray(new Pair[0]);
     }
 
-    // Helper to convert Java Map<String, String> to Kotlin Pair<String, String>[] for Headers
     @SuppressWarnings("unchecked")
     private Pair<String, String>[] toKotlinStringPairs(Map<String, String> javaMap) {
         if (javaMap == null) return new Pair[0];
@@ -56,7 +50,8 @@ public class DwollaService {
         if (response.statusCode == 201) {
             return response.headers.get("location");
         } else {
-            throw new BadRequestException("Failed to create Dwolla customer. Status: " + response.statusCode);
+            log.error("Failed to create Dwolla customer. Status: {}, Body: {}", response.statusCode, response.body);
+            throw new BadRequestException("Failed to create Dwolla customer.");
         }
     }
 
@@ -69,7 +64,8 @@ public class DwollaService {
         if (response.statusCode == 201) {
             return response.headers.get("location");
         } else {
-            throw new BadRequestException("Failed to create funding source. Status: " + response.statusCode);
+            log.error("Failed to create funding source. Status: {}, Body: {}", response.statusCode, response.body);
+            throw new BadRequestException("Failed to create funding source.");
         }
     }
 
@@ -81,11 +77,12 @@ public class DwollaService {
             Map<String, Object> bodyMap = objectMapper.readValue(responseBodyString, Map.class);
             return (Map<String, Object>) bodyMap.get("_links");
         } else {
-            throw new BadRequestException("Failed to create on-demand authorization. Status: " + response.statusCode);
+            log.error("Failed to create on-demand authorization. Status: {}, Body: {}", response.statusCode, response.body);
+            throw new BadRequestException("Failed to create on-demand authorization.");
         }
     }
 
-    public String createTransfer(String sourceFundingSourceUrl, String destinationFundingSourceUrl, String amount) throws Exception {
+    public String createTransfer(String sourceFundingSourceUrl, String destinationFundingSourceUrl, double amount) throws Exception {
         Map<String, Object> requestBody = new HashMap<>();
         Map<String, String> source = new HashMap<>();
         source.put("href", sourceFundingSourceUrl);
@@ -99,14 +96,15 @@ public class DwollaService {
 
         Map<String, String> amountMap = new HashMap<>();
         amountMap.put("currency", "USD");
-        amountMap.put("value", amount);
+        amountMap.put("value", String.format("%.2f", amount));
         requestBody.put("amount", amountMap);
 
         Response<JsonBody> response = dwollaClient.post(JsonBody.class, "transfers", new JsonBody(toKotlinPairs(requestBody)), new Headers(toKotlinStringPairs(new HashMap<>())));
         if (response.statusCode == 201) {
             return response.headers.get("location");
         } else {
-            throw new BadRequestException("Failed to create transfer. Status: " + response.statusCode);
+            log.error("Failed to create transfer. Status: {}, Body: {}", response.statusCode, response.body);
+            throw new BadRequestException("Failed to create transfer.");
         }
     }
 
