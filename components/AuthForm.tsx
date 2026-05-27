@@ -20,6 +20,7 @@ const AuthForm = ({ type }: { type: string }) => {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const formSchema = authFormSchema(type);
 
@@ -33,6 +34,7 @@ const AuthForm = ({ type }: { type: string }) => {
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setIsLoading(true);
+    setErrorMessage('');
     try {
       if (type === 'sign-up') {
         const userData = {
@@ -58,7 +60,8 @@ const AuthForm = ({ type }: { type: string }) => {
         });
         if (response) router.push('/');
       }
-    } catch (error) {
+    } catch (error: any) {
+      setErrorMessage(error.message || 'An error occurred. Please try again.');
       console.error(error);
     } finally {
       setIsLoading(false);
@@ -84,6 +87,12 @@ const AuthForm = ({ type }: { type: string }) => {
           </p>
         </div>
       </header>
+
+      {errorMessage && (
+        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm font-medium">
+            {errorMessage}
+        </div>
+      )}
 
       {user ? (
         <div className="flex flex-col gap-4 py-4">

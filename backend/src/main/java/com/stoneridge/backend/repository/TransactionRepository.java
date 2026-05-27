@@ -13,6 +13,7 @@ import java.util.Optional;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
     Page<Transaction> findByUserOrderByDateDesc(User user, Pageable pageable);
+    Page<Transaction> findByUserAndBank_DatabaseIdOrderByDateDesc(User user, Long bankDatabaseId, Pageable pageable);
     List<Transaction> findByUserAndBank_DatabaseIdOrderByDateDesc(User user, Long bankDatabaseId);
     List<Transaction> findByUserOrderByDateDesc(User user);
     Optional<Transaction> findByAppwriteItemId(String appwriteItemId);

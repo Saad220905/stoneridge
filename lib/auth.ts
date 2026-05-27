@@ -92,10 +92,10 @@ export async function getLoggedInUser() {
 export async function logoutAccount() {
   try {
     (await cookies()).delete("stoneridge-session");
-    redirect("/sign-in");
   } catch (error) {
     return null;
   }
+  redirect("/sign-in");
 }
 
 // Helper to get JWT for other API calls

@@ -123,9 +123,9 @@ public class BankService {
                 .build();
 
         Bank savedBank = bankRepository.save(newBank);
-        
         savedBank.setAppwriteItemId(savedBank.getDatabaseId().toString());
-        bankRepository.save(savedBank);
+        // The second save is not strictly needed because of @Transactional, but it's fine to keep it explicit if preferred.
+        // However, removing it makes it cleaner.
     }
 
     @Transactional(readOnly = true)
@@ -148,9 +148,13 @@ public class BankService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<BankDTO> getBank(Long databaseId) {
+    public Optional<BankDTO> getBank(Long databaseId, String userId) {
         return bankRepository.findById(databaseId)
                 .map(bank -> {
+                    if (bank.getUser() == null || !bank.getUser().getUserId().equals(userId)) {
+                        log.warn("IDOR attempt: user {} tried to access bank {}", userId, databaseId);
+                        return null; 
+                    }
                     try {
                         return convertToDTO(bank, true);
                     } catch (Exception e) {

@@ -63,11 +63,9 @@ public class TransactionService {
                 throw new ResourceNotFoundException("Bank not found or does not belong to user.");
             }
             
-            List<Transaction> bankTransactions = transactionRepository.findByUserAndBank_DatabaseIdOrderByDateDesc(user, bankDbId);
+            Page<Transaction> transactionPage = transactionRepository.findByUserAndBank_DatabaseIdOrderByDateDesc(user, bankDbId, pageable);
             
-            return bankTransactions.stream()
-                    .skip(pageable.getOffset())
-                    .limit(pageable.getPageSize())
+            return transactionPage.getContent().stream()
                     .map(t -> {
                         try {
                             return convertToDTO(t, true);

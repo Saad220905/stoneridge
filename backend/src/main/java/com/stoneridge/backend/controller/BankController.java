@@ -36,8 +36,11 @@ public class BankController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BankDTO> getBank(@PathVariable Long id) {
-        return bankService.getBank(id)
+    public ResponseEntity<BankDTO> getBank(@PathVariable Long id, Authentication authentication) {
+        String userEmail = authentication.getName();
+        User user = userService.findUserEntityByEmail(userEmail)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        return bankService.getBank(id, user.getUserId())
                 .map(ResponseEntity::ok)
                 .orElseThrow(() -> new ResourceNotFoundException("Bank not found with ID: " + id));
     }

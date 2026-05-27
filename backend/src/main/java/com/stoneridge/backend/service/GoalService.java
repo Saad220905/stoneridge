@@ -4,6 +4,7 @@ import com.stoneridge.backend.model.Goal;
 import com.stoneridge.backend.model.User;
 import com.stoneridge.backend.repository.GoalRepository;
 import com.stoneridge.backend.repository.UserRepository;
+import com.stoneridge.backend.exception.BadRequestException;
 import com.stoneridge.backend.exception.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,9 +42,12 @@ public class GoalService {
     }
 
     @Transactional
-    public Goal updateGoalProgress(Long goalId, double amount) {
+    public Goal updateGoalProgress(Long goalId, double amount, String userId) {
         Goal goal = goalRepository.findById(goalId)
                 .orElseThrow(() -> new ResourceNotFoundException("Goal not found with id: " + goalId));
+        if (goal.getUser() == null || !goal.getUser().getUserId().equals(userId)) {
+            throw new BadRequestException("Goal does not belong to the user.");
+        }
         goal.setCurrentAmount(goal.getCurrentAmount() + amount);
         if (goal.getCurrentAmount() >= goal.getTargetAmount()) {
             goal.setStatus("completed");
@@ -52,7 +56,12 @@ public class GoalService {
     }
 
     @Transactional
-    public void deleteGoal(Long goalId) {
-        goalRepository.deleteById(goalId);
+    public void deleteGoal(Long goalId, String userId) {
+        Goal goal = goalRepository.findById(goalId)
+                .orElseThrow(() -> new ResourceNotFoundException("Goal not found with id: " + goalId));
+        if (goal.getUser() == null || !goal.getUser().getUserId().equals(userId)) {
+            throw new BadRequestException("Goal does not belong to the user.");
+        }
+        goalRepository.delete(goal);
     }
 }
