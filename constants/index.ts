@@ -19,6 +19,10 @@ export const sidebarLinks = [
     route: '/goals',
     label: 'Savings Goals',
   },
+  {
+    route: '/split-bills',
+    label: 'Split Bills',
+  },
 ];
 
 export const topCategoryStyles = {

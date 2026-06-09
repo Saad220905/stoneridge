@@ -36,7 +36,7 @@ public class BankController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BankDTO> getBank(@PathVariable Long id, Authentication authentication) {
+    public ResponseEntity<BankDTO> getBank(@PathVariable Long id, Authentication authentication) throws Exception {
         String userEmail = authentication.getName();
         User user = userService.findUserEntityByEmail(userEmail)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));

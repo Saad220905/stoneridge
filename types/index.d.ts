@@ -336,3 +336,27 @@ declare interface getBankProps {
 declare interface getBankByAccountIdProps {
   accountId: string;
 }
+
+declare type BillSplitParticipant = {
+  databaseId: number;
+  email: string;
+  status: 'PENDING' | 'PAID' | 'DECLINED';
+  amount: number;
+  paidAt?: string;
+  billSplitId: number;
+  billName: string;
+  creatorName: string;
+  creatorEmail: string;
+};
+
+declare type BillSplit = {
+  databaseId: number;
+  billName: string;
+  totalAmount: number;
+  status: 'PENDING' | 'COMPLETED' | 'CANCELLED';
+  createdAt: string;
+  creatorId: string;
+  creatorName: string;
+  creatorBankId: number;
+  participants: BillSplitParticipant[];
+};

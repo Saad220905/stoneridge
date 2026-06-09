@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Footer from './Footer';
 import PlaidLink from './PlaidLink';
-import { LayoutDashboard, ReceiptText, Landmark, ArrowLeftRight, Target } from 'lucide-react';
+import { LayoutDashboard, ReceiptText, Landmark, ArrowLeftRight, Target, Users } from 'lucide-react';
 
 const iconMap: Record<string, any> = {
   '/': LayoutDashboard,
@@ -15,6 +15,7 @@ const iconMap: Record<string, any> = {
   '/my-banks': Landmark,
   '/payment-transfer': ArrowLeftRight,
   '/goals': Target,
+  '/split-bills': Users,
 };
 
 const Sidebar = ({ user }: SidebarProps) => {
